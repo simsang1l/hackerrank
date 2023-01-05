@@ -48,3 +48,32 @@ where
 order by
     friend_salary
 ;
+
+-- 다른사람 풀이, 이게 더 쉽게 작성 한거 같다..
+-- ref. https://techblog-history-younghunjo1.tistory.com/172
+select
+    name
+from
+    (
+        select
+              f.ID
+            , s.Name
+            , f.Friend_ID
+            , p.Salary as my_Salary
+        from
+            Students s
+            inner join
+                Friends f
+                on s.ID = f.ID
+            inner join
+                Packages p
+                on f.ID = p.ID
+    ) a
+    inner join
+        Packages p
+        on a.Friend_ID = p.ID
+where
+    a.my_salary < p.Salary 
+order by
+    p.Salary
+;
